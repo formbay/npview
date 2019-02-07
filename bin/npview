@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
+import os
 import argparse
 import contextlib
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 
 @contextlib.contextmanager
@@ -14,15 +16,28 @@ def figure(*args, **kwargs):
 
 
 def main():
-
     options_parser = argparse.ArgumentParser()
-    options_parser.add_argument('image')
+    options_parser.add_argument('target')
     options = options_parser.parse_args()
-    image = np.load(options.image)
-    with figure() as fig:
-        ax = fig.add_subplot(1, 1, 1)
-        ax.imshow(image)
-        plt.show()
+    path = Path(options.target)
+    if path.is_file():
+        image_paths = [path]
+    elif path.is_dir():
+        image_paths = (entry.path for entry in os.scandir(path)
+                       if entry.is_file())
+    else:
+        raise ValueError('target must be a file or directory')
+
+    for image_path in image_paths:
+        with figure() as fig:
+            ax = fig.add_subplot(1, 1, 1)
+            try:
+                image = np.load(image_path)
+            except OSError:
+                continue
+            print('Showing {}'.format(image_path))
+            ax.imshow(image)
+            plt.show()
 
 
 if __name__ == '__main__':
