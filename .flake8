@@ -1,0 +1,7 @@
+[flake8]
+exclude = .git,__pycache__,build,dist,pip_packages,tmp,.venv,venv
+max-line-length = 120
+show-source = True
+statistics = True
+# black recommended
+ignore = E501,W503,E203,F405,F403
