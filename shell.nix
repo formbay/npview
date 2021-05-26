@@ -2,7 +2,7 @@
 
 with pkgs;
 let
-  python = python37;
+  python = python38;
   drv = python.pkgs.callPackage ./default.nix {};
 in
   drv.overridePythonAttrs (attrs: {
