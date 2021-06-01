@@ -2,7 +2,7 @@
 
 with pkgs;
 let
-  python = python38;
+  python = python39;
   drv = python.pkgs.callPackage ./default.nix {};
 in
   drv.overridePythonAttrs (attrs: {
@@ -28,7 +28,7 @@ in
       export PATH="$PIP_PREFIX/bin:$PATH"
       mkdir --parents "$PIP_INSTALL_DIR"
 
-      pip install --no-use-pep517 --editable .
+      pip install --editable .
 
       set +v
     '';

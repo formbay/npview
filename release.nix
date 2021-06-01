@@ -2,7 +2,7 @@
 
 with pkgs;
 let
-  python = python38;
+  python = python39;
 in
   rec {
     library = python.pkgs.callPackage ./default.nix {};
